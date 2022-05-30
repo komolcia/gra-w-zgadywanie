@@ -1,7 +1,4 @@
 # gra-w-zgadywanie
-[14.05, 11:32] Piotr Arłukowicz
-    Szanowni państwo, obiecałem, że opiszę Wam zadanie z grą w zgadywanie. Tutaj macie zatem dokładniejsze wytyczne, jak można byłoby napisać taki program, w dodatku podzielony na "poziomy" zaawansowania. Możecie się samodzielnie sprawdzić, i zobaczyć, do którego poziomu uda Wam się dojść smile Oto opis:
-
 
 
 Gra w zgadywanie
