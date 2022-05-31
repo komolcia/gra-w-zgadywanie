@@ -1,4 +1,5 @@
 require 'socket'
+require 'colorize'
 def proste_zgadywanie()
     y = 0
     koniec = 0
@@ -16,7 +17,7 @@ def proste_zgadywanie()
             }
         end
         hall_of_fame = hall_of_fame.sort {|a,b| a[:attempt] <=> b[:attempt]}
-        puts "Gra polega na zgadnięciu liczby, którą wylosuje program.\nProszę wpisać liczbę od 1 do 100.\nJeśli wpiszesz 'koniec' program zakonczy pracę.\n"
+        puts "Gra polega na zgadnięciu liczby, którą wylosuje program.\nProszę wpisać liczbę od 1 do 100.\nJeśli wpiszesz 'koniec' program zakonczy pracę.\n".red
         random= rand(1..100)
         s = "koniec"
         liczba_prob = 1
@@ -30,20 +31,20 @@ def proste_zgadywanie()
             end
 
             if x.to_i == random
-                puts "Udało ci się!\n"
+                puts "Udało ci się!\n".yellow
                 break
             elsif x.to_i < random
-                puts "Podaj większą liczbę.\n"
+                puts "Podaj większą liczbę.\n".yellow
                 liczba_prob += 1
             elsif x.to_i > random
-                puts "Podaj mniejszą liczbę.\n"
+                puts "Podaj mniejszą liczbę.\n".yellow
                 liczba_prob += 1
             end
         end
         if koniec == 1
             break
         end
-        puts "Aby zapisać się do Hall_of_Fame podaj swoje imie.\n"
+        puts "Aby zapisać się do Hall_of_Fame podaj swoje imie.\n" .blue
         imie = gets.chomp
         puts "Pan..Pani "+ imie + " udało się w "+ liczba_prob.to_s + " próbach.\n"
         date = Time.new
@@ -55,7 +56,7 @@ def proste_zgadywanie()
             p.attempt = p.attempt.to_i
             if p.name == imie 
                 if liczba_prob < p.attempt.to_i && p.attempt != nil
-                    puts "Jesteś lepszy niż wcześniej.\nPróby wtedy:" + p.attempt.to_s+ " , a to było "+ p.date.to_s  + "\nPróby teraz: " + liczba_prob.to_s + "\n"
+                    puts "\nJesteś lepszy niż wcześniej.\n\nPróby wtedy:" + p.attempt.to_s+ " , a to było "+ p.date.to_s  + "\nPróby teraz: " + liczba_prob.to_s + "\n\n"
                 end
             end
             if liczba_prob > p.attempt.to_i
@@ -71,18 +72,18 @@ def proste_zgadywanie()
         File.open("hall_of_fame.txt", 'w') {|f| f.write(wpisz_sie) }
 
         if najlepszy == 0
-            puts "Masz najlepszy wynik! Gratulacje!"
+            puts "Masz najlepszy wynik! Gratulacje!".blue
         end
-        puts "Gramy jeszcze raz?\nWybierz T lub N\n"
+        puts "Gramy jeszcze raz?\nWybierz T lub N\n".blue
         s = gets.chomp
         if s == "T"
-            puts "To gramy! Jeszczę raz wyjaśnię zasady gry.\n"
+            puts "To gramy! Jeszczę raz wyjaśnię zasady gry.\n".yellow
         elsif s == "N"
-            puts "Koniec gry.\n"
+            puts "Koniec gry.\n".yellow
             y = 1
             break 
         else
-            puts "Podałeś złą literkę. Program kończy pracę."  
+            puts "Podałeś złą literkę. Program kończy pracę."  .yellow
         end
     end
 end
@@ -100,7 +101,7 @@ def analiza_danych()
                 hall_of_fame.push(gracze.new(my_array[0],my_array[1],my_array[2],my_array[3]))
             end
         }
-        puts "Średnia ilość prób: "
+        puts "Średnia ilość prób: ".yellow
         srednia = 0
         ilosc = 0
         hall_of_fame.each { |p| 
@@ -110,9 +111,9 @@ def analiza_danych()
         }
         hall_of_fame = hall_of_fame.sort {|a,b| a[:attempt] <=> b[:attempt]}
         srednia = srednia / ilosc
-        puts srednia + "\n"
-        puts "Najlepszym zawodnikiem  jest "+ hall_of_fame[0] + "\n"
-        puts "Najczęstsze liczby do odgadnięcia to : "
+        puts srednia.to_s + "\n"
+        puts "Najlepszym zawodnikiem  jest ".blue+ hall_of_fame[0].name + " udało mu się tylko w ".blue + hall_of_fame[0].attempt.to_s + " próbach!\n".blue
+        puts "Najczęstsze liczby do odgadnięcia to : ".blue
         srednia_dla_zakresu = [0,0,0,0]
         zakres=[0,0,0,0] 
         hall_of_fame.each { |p|
@@ -132,24 +133,24 @@ def analiza_danych()
         }
         if zakres[0] != 0
              srednia_dla_zakresu[0] = srednia_dla_zakresu[0] / zakres[0]
-             puts "Średnia dla zakresu od 0...25 to: " + srednia_dla_zakresu[0] + " , a ilość liczb to: " +zakres[0] + "\n"
+             puts "Średnia dla zakresu od 0...25 to: ".green + srednia_dla_zakresu[0].to_s + " , a ilość liczb to: ".green + zakres[0].to_s + "\n".green
         end
         if zakres[1] != 0
             srednia_dla_zakresu[1] = srednia_dla_zakresu[1] / zakres[1]
-            puts "Średnia dla zakresu od 0...25 to: " + srednia_dla_zakresu[1] + " , a ilość liczb to: " +zakres[1] + "\n"
+            puts "Średnia dla zakresu od 25...50 to: ".yellow + srednia_dla_zakresu[1].to_s + " , a ilość liczb to: ".yellow + zakres[1].to_s + "\n".yellow
         end
         if zakres[2] != 0
         srednia_dla_zakresu[2] = srednia_dla_zakresu[2] / zakres[2]
-        puts "Średnia dla zakresu od 0...25 to: " + srednia_dla_zakresu[2] + " , a ilość liczb to: " +zakres[2] + "\n"
+        puts "Średnia dla zakresu od 50...75 to: ".blue + srednia_dla_zakresu[2].to_s + " , a ilość liczb to: ".blue + zakres[2].to_s + "\n".blue
         end
         if zakres[3] != 0
             srednia_dla_zakresu[3] = srednia_dla_zakresu[3] / zakres[3]
-            puts "Średnia dla zakresu od 0...25 to: " + srednia_dla_zakresu[3] + " , a ilość liczb to: " +zakres[3] + "\n"
+            puts "Średnia dla zakresu od 75...100 to: ".red + srednia_dla_zakresu[3].to_s + " , a ilość liczb to: ".red + zakres[3].to_s + "\n".red
         end
-        puts "Czy są osoby szybko zgadujące?\n"
+        puts "Czy są osoby szybko zgadujące?\n".red
         hall_of_fame.each { |p|
-            if p.attempt < 5
-                puts "Gracz " + p.name + " potrafi super szybko zgadywać!\nTylko w " + p.attempt + " próbach\n\n"
+            if p.attempt <= 5
+                puts "Gracz ".blue + p.name.to_s + " potrafi super szybko zgadywać!\nTylko w ".blue + p.attempt.to_s + " próbach\n\n".blue
             end
         }
     end
@@ -190,7 +191,7 @@ def gra_robot(random,x)
     end
     return liczba_prob
 end
-puts "Witaj w programie zaprojektowanym przez Julie Komorowską.\nMasz kilka opcji do wyboru:\n1. Gra w zgadywanie\n2. Analiza wyników\n3. Gra w zgadywanie za pomocą wyszukiwania binarnego dla dwóch klientów\n"
+puts "Witaj w programie zaprojektowanym przez Julie Komorowską.\nMasz kilka opcji do wyboru:\n".blue + "1. Gra w zgadywanie\n".yellow + "2. Analiza wyników\n".blue + "3. Gra w zgadywanie za pomocą wyszukiwania binarnego dla dwóch klientów\n".green
 x = gets.to_i
 case x
 when 1
