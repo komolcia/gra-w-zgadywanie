@@ -1,5 +1,29 @@
 # gra-w-zgadywanie
+Komendy porzebne do uruchomienia gry:
 
+````
+gem install colorize
+
+
+````
+Program zawiera trzy opcje:
+
+1. Gra w zgadywanie
+
+Gra w zgadywanie polega na zgadywaniu wylosowanej liczby przez program w zakresie od 1 do 100. Po każdym błędnym wpisaniu liczby program będzie nam podpowiadał czy podać następnym razem "większą" liczbę czy "mniejszą". Za każdym razem możemy wpisać się do Hall_of_fame- dokumentu tekstowego, który jest uporządkowany w kolejności od najlepszego do najgorszego wyniku. Można zagrać w grę więcej razy bez konieczności restartowania programu. Po wpisaniu 'koniec' program kończy pracę.
+
+![pierwszy](https://user-images.githubusercontent.com/58554458/171210727-464270fd-9991-4b7b-9cc8-889de0c62e0d.png)
+
+
+2. Analiza wyników
+
+3. Gra w zgadywanie za pomocą wyszukiwania binarnego dla dwóch klientów
+
+
+
+
+
+Opis Zadania:
 
 Gra w zgadywanie
 
