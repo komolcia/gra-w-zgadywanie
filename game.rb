@@ -1,3 +1,4 @@
+require 'socket'
 def proste_zgadywanie()
     y = 0
     koniec = 0
@@ -148,18 +149,103 @@ def analiza_danych()
         puts "Czy są osoby szybko zgadujące?\n"
         hall_of_fame.each { |p|
             if p.attempt < 5
-                puts "Gracz " + p.name + " potrafi super szybko zgadywać!\nTylko w " + p.attempt +" próbach\n\n"
+                puts "Gracz " + p.name + " potrafi super szybko zgadywać!\nTylko w " + p.attempt + " próbach\n\n"
+            end
         }
     end
 end
 
-puts "Witaj w programie zaprojektowanym przez Julie Komorowską.\nMasz kilka opcji do wyboru:\n1. Gra w zgadywanie\n2. Analiza wyników\n"
+def clients_puts(message)
+	@client[0].puts message
+	@client[1].puts message
+end
+
+def wpisz_numerek(player)
+    client_number = player == 'o' ? 0 : 1
+    @client[client_number].puts "REQ"
+    return @client[client_number].gets
+end
+
+def gra_robot(random,x)
+    s = "koniec"
+    liczba_prob = 1
+   
+    loop do 
+        if x == s then
+            puts "Żegnaj"
+            koniec = 1
+            break
+        end
+        if x.to_i == random
+            puts "Udało ci się!\n"
+            break
+        elsif x.to_i < random
+            return -1
+        elsif x.to_i > random
+            return -2
+        end
+    end
+    if x.to_s == s
+       return liczba_prob
+    end
+    return liczba_prob
+end
+puts "Witaj w programie zaprojektowanym przez Julie Komorowską.\nMasz kilka opcji do wyboru:\n1. Gra w zgadywanie\n2. Analiza wyników\n3. Gra w zgadywanie za pomocą wyszukiwania binarnego dla dwóch klientów\n"
 x = gets.to_i
 case x
 when 1
     proste_zgadywanie()
 when 2
     analiza_danych()
+when 3
+    puts "Połącz dwóch graczy.\n"
+    @client = []
+    server = TCPServer.open(2000) 
+    @client[0] = server.accept
+    @client[0].puts "PNT Cześć! Graczu 1.Gra polega na zgadnięciu liczby, którą wylosuje program.Proszę wpisać liczbę od 1 do 100. Jeśli wpiszesz 'koniec' program zakonczy pracę.\n"
+    @client[1] = server.accept
+    @client[1].puts "PNT Cześć! Graczu 2.Gra polega na zgadnięciu liczby, którą wylosuje program. Proszę wpisać liczbę od 1 do 100. Jeśli wpiszesz 'koniec' program zakonczy pracę.\n"
+    turn_player = 'o'
+    liczba_prob1 = 0
+    liczba_prob2 = 0
+    random= rand(1..100)
+    (1..100).each{ |turn_number|
+	    
+        if turn_player == 'o'
+	        @client[0].puts "PNT Który raz? -  #{turn_number}, Próby: #{liczba_prob1}, Gracz: 1."
+            liczba_prob1 += 1 
+        else
+            @client[1].puts "PNT Który raz? - #{turn_number}, Próby: #{liczba_prob2}, Gracz: 2."
+            liczba_prob2 += 1
+        end
+      
+        y = gra_robot(random,(wpisz_numerek turn_player).to_i)
+	    if  y > 0
+		    break
+	    end
+        if turn_player == 'o'
+            if y == -1
+            @client[0].puts "PNT Podaj większą liczbę."
+            else
+            @client[0].puts "PNT Podaj mniejszą liczbę."
+            end
+        else
+            if y == -1
+                @client[1].puts "PNT Podaj większą liczbę."
+                else
+                @client[1].puts "PNT Podaj mniejszą liczbę."
+                end
+        end
+	    turn_player = turn_player == 'o' ? 'x' : 'o'
+    }
+    if turn_player == 'o'
+        clients_puts "PNT Wygrany: 1 , Proby: #{liczba_prob1} Przegrany: 2, Proby: #{liczba_prob2}, Numerek: #{random}"
+    else
+        clients_puts "PNT Wygrany: 2, Proby: #{liczba_prob2} Przegrany: 1, Proby: #{liczba_prob2}, Numerek: #{random}"
+    end
+    clients_puts "EXT"
+    @client[0].close
+    @client[1].close  
 else
     puts "Nie ma takiego numerku.\n"
 end
