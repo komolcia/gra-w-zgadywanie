@@ -1,5 +1,67 @@
 # gra-w-zgadywanie
+Komendy porzebne do uruchomienia gry:
 
+````
+sudo apt-get install ruby
+
+gem install colorize
+````
+Jak 'włączyć' program:
+
+````
+ruby game.rb
+````
+Jeśli używamy komunikacji poprzez Sockety na początku:
+````
+ruby game.rb
+````
+Następnie w drugim i trzecim terminalu:
+````
+ruby player.rb
+ruby player_robot.rb
+````
+
+Program zawiera trzy opcje:
+
+1. Gra w zgadywanie
+
+Gra w zgadywanie polega na zgadywaniu wylosowanej liczby przez program w zakresie od 1 do 100. Po każdym błędnym wpisaniu liczby program będzie nam podpowiadał czy podać następnym razem "większą" liczbę czy "mniejszą". Za każdym razem możemy wpisać się do Hall_of_fame- dokumentu tekstowego, który jest uporządkowany w kolejności od najlepszego do najgorszego wyniku. Można zagrać w grę więcej razy bez konieczności restartowania programu. Po wpisaniu 'koniec' program kończy pracę.
+
+![pierwszy](https://user-images.githubusercontent.com/58554458/171210727-464270fd-9991-4b7b-9cc8-889de0c62e0d.png)
+
+
+2. Analiza wyników
+ 
+Po wpisaniu opcji 2 gra robi analize opisaną w poziomie 6, aby nie używać dodatkowych arkuszy excela.
+
+![drugi](https://user-images.githubusercontent.com/58554458/171214081-1d0f7e08-3199-40a1-be4b-897e757b4623.png)
+
+
+3. Gra w zgadywanie za pomocą wyszukiwania binarnego dla dwóch klientów
+
+![trzeci](https://user-images.githubusercontent.com/58554458/171214719-9536b09f-9b90-4195-b644-d6b4aa97c8ef.png)
+
+Na początku trzeba uruchomić serwer, czyli wpisać opcje 3. Następnie uruchomić do wyboru:
+
+player vs player
+
+player vs player_robot
+
+player_robot vs player_robot(chociaż lekko nie ma sensu, ponieważ pierwszy program 'odpalony' z terminala zawsze wygra.)
+Komunikacja opiera się na socket-ach, czyli gniazdach, które są  interfejsem programowania służącym do oprogramowania transmisji sieciowych.
+
+
+Player:
+
+![czwarty](https://user-images.githubusercontent.com/58554458/171214737-ef033d6e-6257-474a-8d71-e1f2e7e4adf2.png)
+
+Player_Robot oparty na wyszukiwaniu binarnym:
+
+![piaty](https://user-images.githubusercontent.com/58554458/171214743-41a58979-a1a5-4a24-a083-0839083f3aa2.png)
+
+
+
+Opis Zadania:
 
 Gra w zgadywanie
 
