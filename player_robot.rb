@@ -15,7 +15,7 @@ while data != "EXT"
         my_string = a[2].to_s
         if my_string.include?('wi') || my_string.include?('mnie') 
             b = my_string
-            puts b
+            
         end
 	when "REQ"
 		puts "Wybierz numerek."
