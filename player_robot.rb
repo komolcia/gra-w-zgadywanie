@@ -1,12 +1,12 @@
 require 'socket'
 hostname = 'localhost'
 port = 2000
-s = TCPSocket.open(hostname, port)
+s = TCPSocket.open(hostname, port) #otwieranie servera
 data = s.gets.chop
 liczba_p = 0
 k = 99
 b = ""
-liczba_s = (liczba_p + k)/2
+liczba_s = (liczba_p + k)/2 #polowa czyli (0 +99)   /2 czyli 49
 while data != "EXT"
 	a = data.split
     case a[0]
@@ -19,18 +19,18 @@ while data != "EXT"
         end
 	when "REQ"
 		puts "Wybierz numerek."
-        if b.include? "wi"
+        if b.include? "wi" # jesli potrzebuje wiekszej
             
-            liczba_p = liczba_s + 1
+            liczba_p = liczba_s + 1 # jesli wiekszej to liczba p = 50 a liczba s to (50+99)/2 czyli 74
             liczba_s = (liczba_p + k)/2
             s.puts liczba_s
             puts liczba_s.to_s + "\n"
             
 
-        elsif b.include?('mnie')
+        elsif b.include?('mnie') #jesli potrzebuje mniejszej
            
             k = liczba_s - 1
-            liczba_s = (liczba_p + k)/2
+            liczba_s = (liczba_p + k)/2 # tu bedzie ok 24 i analogicznie w petli
             s.puts liczba_s
             puts liczba_s.to_s + "\n"
             
